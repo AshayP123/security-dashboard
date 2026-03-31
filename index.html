@@ -14,57 +14,62 @@
 
 <body class="bg-[#0a0f1d] text-white font-[Satoshi]">
 
-  <!-- HEADER -->
-  <header class="h-20 flex items-center justify-between px-8 border-b border-gray-800/50">
-    <h1 class="text-xl font-bold">🔐 Security Dashboard</h1>
-    <span class="text-green-400 text-sm">● System Secure</span>
-  </header>
+<header class="h-20 flex items-center justify-between px-8 border-b border-gray-800/50">
+  <h1 class="text-xl font-bold">🔐 Security Dashboard</h1>
+  <span class="text-green-400 text-sm">● System Secure</span>
+</header>
 
-  <main class="p-8 max-w-7xl mx-auto space-y-6">
+<main class="p-8 max-w-7xl mx-auto space-y-6">
 
-    <!-- PASSWORD CHECK -->
-    <div class="glass-card rounded-2xl p-8">
-      <h2 class="text-lg font-bold mb-4">Cipher Health Check</h2>
+  <!-- PASSWORD -->
+  <div class="glass-card rounded-2xl p-8">
+    <h2 class="text-lg font-bold mb-4">Cipher Health Check</h2>
 
-      <input 
-        type="password" 
-        id="password"
-        placeholder="Enter password"
-        class="w-full bg-[#0a0f1d] border border-[#3a4558] rounded-xl p-4 mb-4"
-      >
+    <input 
+      type="password" 
+      id="password"
+      placeholder="Enter password"
+      class="w-full bg-[#0a0f1d] border border-[#3a4558] rounded-xl p-4 mb-4"
+    />
 
-      <!-- strength bar -->
-      <div class="w-full h-2 bg-gray-800 rounded mb-2">
-        <div id="strength-bar" class="h-full w-0 bg-green-400"></div>
-      </div>
+    <button 
+      onclick="analyzePassword()"
+      class="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-lg mb-4"
+    >
+      Analyze Password
+    </button>
 
-      <p id="result" class="text-sm"></p>
+    <div class="w-full h-2 rounded mb-2 overflow-hidden">
+      <div id="strength-bar" class="h-full w-0 transition-all duration-300"></div>
     </div>
 
-    <!-- GRID -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <p id="result" class="text-sm font-medium"></p>
+  </div>
 
-      <!-- NETWORK PANEL -->
-      <div class="glass-card rounded-2xl p-6">
-        <h3 class="text-lg font-bold mb-4">Network Profile</h3>
+  <!-- GRID -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-        <p>IP: <span id="ip">Loading...</span></p>
-        <p>Location: <span id="location"></span></p>
-        <p>Browser: <span id="browser"></span></p>
-      </div>
+    <!-- NETWORK -->
+    <div class="glass-card rounded-2xl p-6">
+      <h3 class="text-lg font-bold mb-4">Network Profile</h3>
 
-      <!-- ALERTS -->
-      <div class="glass-card rounded-2xl p-6">
-        <h3 class="text-lg font-bold mb-4">Recent Activity</h3>
-
-        <p class="text-red-400 text-sm">⚠️ Suspicious login attempt detected</p>
-        <p class="text-green-400 text-sm mt-2">✔ System scan completed</p>
-      </div>
-
+      <p>IP: <span id="ip">Loading...</span></p>
+      <p>Location: <span id="location"></span></p>
+      <p>Browser: <span id="browser"></span></p>
     </div>
 
-  </main>
+    <!-- ALERT -->
+    <div class="glass-card rounded-2xl p-6">
+      <h3 class="text-lg font-bold mb-4">Recent Activity</h3>
+      <div id="activity-log" class="space-y-2 text-sm">
+  <p class="text-gray-400">Initializing system...</p>
+</div>
+    </div>
 
-  <script src="script.js"></script>
+  </div>
+
+</main>
+
+<script src="script.js"></script>
 </body>
 </html>
