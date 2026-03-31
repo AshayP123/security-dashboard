@@ -9,12 +9,13 @@ async function analyzePassword() {
   const val = passwordInput.value;
 
   bar.style.width = "0%";
-result.innerHTML = `
-  <span class="flex items-center gap-2 text-gray-400">
-    <span class="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full"></span>
-    Analyzing password...
-  </span>
-`;
+  result.innerHTML = `
+    <span class="flex items-center gap-2 text-gray-400">
+      <span class="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full"></span>
+      Analyzing password...
+    </span>
+  `;
+
   if (!val) {
     result.innerText = "Enter a password";
     return;
@@ -86,7 +87,18 @@ async function checkLeakedPassword(password) {
 }
 
 // =========================
-// NETWORK INFO (FINAL WORKING)
+// IP RISK CHECK (SIMULATED)
+// =========================
+function checkIPRisk(ip) {
+  const risk = Math.random();
+
+  if (risk < 0.7) return "safe";
+  if (risk < 0.9) return "suspicious";
+  return "malicious";
+}
+
+// =========================
+// NETWORK + IP SECURITY
 // =========================
 fetch("https://api.ipify.org?format=json")
   .then(res => res.json())
@@ -95,13 +107,24 @@ fetch("https://api.ipify.org?format=json")
     const ip = ipData.ip;
     document.getElementById("ip").innerText = ip;
 
-    // Use better location API
+    // 🔥 IP SECURITY CHECK
+    const risk = checkIPRisk(ip);
+    const log = document.getElementById("activity-log");
+
+    if (risk === "safe") {
+      log.innerHTML = `<span class="text-green-400">✔ IP is safe</span>`;
+    } 
+    else if (risk === "suspicious") {
+      log.innerHTML = `<span class="text-yellow-400">⚠️ Suspicious activity detected</span>`;
+    } 
+    else {
+      log.innerHTML = `<span class="text-red-400">🚨 Potentially malicious IP</span>`;
+    }
+
     return fetch(`https://ipapi.co/${ip}/json/`);
   })
   .then(res => res.json())
   .then(data => {
-
-    console.log("LOCATION DATA:", data); // debug
 
     if (data.city && data.country_name) {
       document.getElementById("location").innerText =
@@ -111,8 +134,7 @@ fetch("https://api.ipify.org?format=json")
     }
 
   })
-  .catch(err => {
-    console.error("Location error:", err);
+  .catch(() => {
     document.getElementById("location").innerText = "Unavailable";
   });
 
@@ -132,33 +154,3 @@ if (/Mac/i.test(ua)) device = "Mac";
 else if (/Windows/i.test(ua)) device = "Windows";
 
 document.getElementById("browser").innerText = `${browser} (${device})`;
-// =========================
-// INITIAL SYSTEM BOOT LOGS
-// =========================
-
-  setTimeout(() => {
-    addActivity("System initialized", "success");
-  }, 500);
-
-  setTimeout(() => {
-    addActivity("Network scan complete", "info");
-  }, 1000);
-
-  setTimeout(() => {
-    addActivity("Monitoring active", "success");
-  }, 1500);
-
-// =========================
-// SYSTEM BOOT LOGS (WORKING)
-// =========================
-setTimeout(() => {
-  addActivity("System initialized", "success");
-}, 500);
-
-setTimeout(() => {
-  addActivity("Network scan complete", "info");
-}, 1000);
-
-setTimeout(() => {
-  addActivity("Monitoring active", "success");
-}, 1500);
